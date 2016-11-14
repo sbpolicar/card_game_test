@@ -1,0 +1,31 @@
+ <div ng-show="!ready" class="row" ng-if="selected === $index" class="text-center" ng-repeat="player in playerChoices track by $index">
+  <button class="previous btn btn-default pull-left" ng-click="choosePlayer('prev', selected)">&larr; {{selected === 0 ? availablePlayers[3] : availablePlayers[selected - 1]}}</button>
+  <button class="next btn btn-default pull-right" ng-click="choosePlayer('next', selected)">{{selected === availablePlayers.length - 1 ? availablePlayers[selected] : availablePlayers[selected + 1]}} &rarr;</button>
+  <br>
+  <h1 class="nav-title">{{player.name}}</h1><hr>
+  <button class="btn btn-default" ng-click="set()"><i class="fa fa-repeat"></i> Reset</button><br><br>
+  <div class="" ng-repeat="(title, content) in player.stats track by $index">
+    <h2 ng-if="isInt(title) === false">{{title}}:<br>
+      <i ng-click="alterStats('sub', title, player)" class="fa fa-minus-square btn btn-default"></i>
+      <input class="stat-input" type="number" readonly ng-model="content">
+      <i ng-click="alterStats('add', title, player)" class="fa fa-plus-square btn btn-default"></i>
+    </h2>
+  </div>
+  <button class="btn btn-default" ng-click="save(playerChoices[player.name])">Save Character</button>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col-sm-3" ng-repeat="player in activePlayers track by $index">
+    <h3>{{player.name}} <i ng-hide="ready" ng-click="remove($index)" class="fa fa-close pull-right btn-danger"></i></h3>
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="(key, value) in player.stats track by $index">
+        {{key}}: {{value}}
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <button class="btn btn-default" ng-click="ready = !ready" ng-hide="ready">Begin</button>
+</div>
